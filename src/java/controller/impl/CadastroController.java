@@ -6,30 +6,22 @@
 package controller.impl;
 
 import controller.AbstractController;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import models.Comprador;
+import models.Endereco;
 import models.Produto;
-import persistence.PersistenceInterface;
-import persistence.PersistenceInterfaceImpl;
+import persistence.CompradorDAO;
+import persistence.ProdutoDAO;
+
 
 /**
  *
  * @author LucasAugustoCordeiro
  */
 public class CadastroController extends AbstractController {
-    
-    @EJB
-    Comprador compradorT = new Comprador();;
-    
-    public void setEmail(String email){
-        this.compradorT.setEmail(email);
-    }
-    
-    public void setNome(String nome){
-        this.compradorT.setNome(nome);
-    }
     
     @Override
     public void execute() {
@@ -47,22 +39,22 @@ public class CadastroController extends AbstractController {
             String confirmSenha = request.getParameter("confirmSenha");
 
             if (senha.equals(confirmSenha)) {
-                //
-                //Instancia
-//                Endereco endereco = new Endereco(enderecoNome, numero, complemento, cep);
-                this.setEmail(email);
-                this.setNome(nome);
-                //
-                //SAVE BD
-                PersistenceInterface iPersistence = new PersistenceInterfaceImpl();
-                iPersistence.save(compradorT);
-                //
-                //
-                request.getSession().setAttribute("compradorAtual", compradorT);
+                Endereco endereco = new Endereco(enderecoNome, numero, complemento, cep);
+                Comprador comprador = new Comprador(nome, email, endereco, senha);
+       
+                CompradorDAO compr = new CompradorDAO();
+                compr.inserir(comprador);
+                
+                ProdutoDAO prod = new ProdutoDAO();
+                List<Produto> lista_produtos = new <Produto>ArrayList();
+                lista_produtos = prod.listar();
+                
+                request.setAttribute("lista_produtos", lista_produtos);
+                request.getSession().setAttribute("compradorAtual", comprador);
                //
                 //INDEX
-                List lista_produtos = iPersistence.list(Produto.class);
-                request.getSession().setAttribute("lista_produtos", lista_produtos);
+//                List lista_produtos = iPersistence.list(Produto.class);
+//                request.getSession().setAttribute("lista_produtos", lista_produtos);
                 this.setReturnPage("/index.jsp");
             } else {
                 request.setAttribute("erroCadastro", "Senha incorreta");

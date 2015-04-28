@@ -16,7 +16,7 @@ public class Produto{
     
     private String scrImage;
     private String nome;
-    private double preco;
+    private String preco;
     private String descricao;
     private String informacaoTecnica;
     
@@ -24,7 +24,7 @@ public class Produto{
     
     private List<Compra> compras;
 
-    public Produto(String scrImage, String nome, double preco, String descricao, String informacaoTecnica) {
+    public Produto(String scrImage, String nome, String preco, String descricao, String informacaoTecnica) {
         this.scrImage = scrImage;
         this.nome = nome;
         this.preco = preco;
@@ -68,11 +68,11 @@ public class Produto{
         this.nome = nome;
     }
 
-    public double getPreco() {
+    public String getPreco() {
         return preco;
     }
 
-    public void setPreco(double preco) {
+    public void setPreco(String preco) {
         this.preco = preco;
     }
 

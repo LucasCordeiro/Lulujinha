@@ -13,18 +13,14 @@ import java.util.List;
  * @author RodrigoSoldi
  */
 public class Comprador{
-    
     private String nome;
     private String email;
-    private String senha;    
-    
+    private String senha;     
     private List<Avaliacao> avaliacoes;
-    
     private List<Compra> compras;
-    
     private Endereco endereco;
 
-    public Comprador(String nome, String email, Endereco endereco, String senha) {
+    public Comprador( String nome, String email, Endereco endereco, String senha) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -77,7 +73,7 @@ public class Comprador{
     public String getSenha() {
         return senha;
     }
-
+    
     public void setSenha(String senha) {
         this.senha = senha;
     }
@@ -94,5 +90,9 @@ public class Comprador{
         this.avaliacoes = avaliacoes;
     }
 
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+    
     
 }
